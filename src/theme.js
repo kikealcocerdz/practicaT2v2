@@ -3,15 +3,13 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#00796b', // Verde azulado
+      main: '#1976d2',
     },
     secondary: {
-      main: '#c2185b', // Rosa fuerte
+      main: '#dc004e',
     },
   },
-  typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
-  },
 });
+
 
 export default theme;
