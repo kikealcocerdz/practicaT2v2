@@ -7,7 +7,7 @@ function Navbar() {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Click&Dona
+          DonarAUnClick
         </Typography>
         <Button color="inherit" component={Link} to="/">
           Inicio

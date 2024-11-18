@@ -8,6 +8,9 @@ const theme = createTheme({
     secondary: {
       main: '#dc004e',
     },
+    typography: {
+      fontFamily: 'Playfair Display, serif',
+    },
   },
 });
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Asegúrate de tener react-router-dom configurado
 import Navbar from "../components/Navbar";
+import heroBackgroundImage from "../assets/hero-background-image.jpg";
 import {
   Container,
   Typography,
@@ -25,10 +26,127 @@ function HomePage() {
       <Navbar />
       <Box
         sx={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          alignItems: "center",
+        }}
+      >
+        <Box
+          marginTop={4}
+          sx={{
+            textAlign: "center",
+            height: "60vh",
+            width: "75vw",
+            borderRadius: "15px",
+            justifyContent: "center",
+            gap: 8,
+            display: "flex",
+            alignItems: "center",
+            backgroundImage: `url(${heroBackgroundImage})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            color: "white",
+            fontFamily: "Roboto, sans-serif",
+          }}
+        >
+          <Box
+            sx={{
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              backgroundColor: "white",
+              color: "black",
+              borderRadius: "15px",
+            }}
+          >
+            <Typography
+              variant="h2"
+              component="h1"
+              align="center"
+              sx={{
+                fontWeight: "bold",
+                borderRadius: "15px",
+                padding: "15px",
+                fontFamily: "Playfair Display, serif",
+                opacity: 1,
+              }}
+            >
+              DonarAUnClick
+            </Typography>
+            <Typography
+              variant="h7"
+              component="h3"
+              align="center"
+              gutterBottom
+              sx={{
+                marginTop: 1,
+                padding: "10px",
+              }}
+            >
+              Donde las donaciones llegan a su destino
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              backgroundColor: "white",
+              color: "black",
+              borderRadius: "15px",
+              justifyContent: "center",
+              padding: "50px",
+              alignItems: "center",
+              display: "flex",
+              flexDirection: "column",
+              width: "50%",
+            }}
+          >
+            <Typography
+              variant="h4"
+              component="h2"
+              width={"80%"}
+              textAlign={"left"}
+              fontWeight={"regular"}
+              gutterBottom
+            >
+              ¿Qué es DonarAUnClick?
+            </Typography>
+            <Typography
+              variant="p"
+              component="p"
+              align="justify"
+              gutterBottom
+              sx={{ maxWidth: "80%" }}
+            >
+              <strong>DonarAUnClick</strong> es una plataforma que busca dar a
+              las personas la oportunidad de donar a sus comunidades y a los
+              servicios locales. Con un enfoque en la{" "}
+              <strong>transparencia y la responsabilidad</strong>, nos permite
+              hacer visibles los beneficios que aportan las donaciones. Nuestro
+              trabajo es conectar a las distintas ONGs con las personas que
+              desean ayudar.
+            </Typography>
+            <Button
+              size="large"
+              color="primary"
+              variant="contained"
+              component={Link}
+              to="/donate"
+              sx={{
+                marginTop: 2,
+                width: "80%",
+                padding: "10px",
+              }}
+            >
+              Haz tu primera donación
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+      <Box
+        sx={{
           minHeight: "100vh",
-          backgroundImage: "url('/path-to-your-image.jpg')", // Cambia a la ruta de tu imagen
           backgroundSize: "cover",
           backgroundPosition: "center",
+          backgroundColor: "white",
           display: "flex",
           alignItems: "start",
           justifyContent: "start",
@@ -37,7 +155,7 @@ function HomePage() {
         }}
       >
         <Container
-          maxWidth="md"
+          maxWidth="lg"
           sx={{
             bgcolor: "rgba(255, 255, 255, 0.8)", // Fondo translúcido para el contenido
             p: 4,
@@ -48,16 +166,37 @@ function HomePage() {
           <Typography variant="h4" component="h2" gutterBottom>
             Campañas destacadas
           </Typography>
-          <Grid2 container spacing={4} sx={{ mb: 4 }}>
+          <Grid2
+            container
+            spacing={4}
+            sx={{
+              mb: 4,
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
             {campañas.map((campaña, index) => (
-              <Grid2 item xs={12} sm={6} md={4} key={index}>
+              <Grid2
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                key={index}
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
                 <Card
                   sx={{
                     height: "100%",
                     display: "flex",
-                    width: "100%",
+                    width: "75%",
                     flexDirection: "column",
-                    justifyContent: "space-between",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
                   <CardContent>
@@ -71,7 +210,7 @@ function HomePage() {
                   </CardContent>
                   <CardActions>
                     <Button
-                      size="small"
+                      size="large"
                       color="primary"
                       variant="contained"
                       component={Link}
