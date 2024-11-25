@@ -13,12 +13,31 @@ import {
   CardActions,
   Grid2,
 } from "@mui/material";
+import Footer from "../components/Footer";
 
 function HomePage() {
   const campañas = [
-    "Educación para todos",
-    "Alimentos para familias",
-    "Agua limpia",
+    {
+      id: 1,
+      nombre: "Educación para todos",
+      descripcion:
+        "Brindar acceso a la educación básica a niños en comunidades vulnerables.",
+      imagen: "https://placehold.co/200",
+    },
+    {
+      id: 2,
+      nombre: "Alimentos para familias",
+      descripcion:
+        "Proveer alimentos esenciales a familias necesitadas en comunidades rurales.",
+      imagen: "https://placehold.co/200",
+    },
+    {
+      id: 3,
+      nombre: "Agua limpia",
+      descripcion:
+        "Ayudar a construir sistemas de agua potable en regiones remotas.",
+      imagen: "https://placehold.co/200",
+    },
   ];
 
   return (
@@ -30,6 +49,7 @@ function HomePage() {
           justifyContent: "center",
           width: "100%",
           alignItems: "center",
+          marginTop: 8,
         }}
       >
         <Box
@@ -52,7 +72,6 @@ function HomePage() {
         >
           <Box
             sx={{
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
               backgroundColor: "white",
               color: "black",
               borderRadius: "15px",
@@ -87,7 +106,6 @@ function HomePage() {
           </Box>
           <Box
             sx={{
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
               backgroundColor: "white",
               color: "black",
               borderRadius: "15px",
@@ -129,7 +147,7 @@ function HomePage() {
               color="primary"
               variant="contained"
               component={Link}
-              to="/donate"
+              to="#campaigns"
               sx={{
                 marginTop: 2,
                 width: "80%",
@@ -156,11 +174,14 @@ function HomePage() {
       >
         <Container
           maxWidth="lg"
+          id="campaigns"
           sx={{
             bgcolor: "rgba(255, 255, 255, 0.8)", // Fondo translúcido para el contenido
             p: 4,
             borderRadius: 2,
             boxShadow: 3,
+            backgroundColor: "aliceblue",
+            mb: 4,
           }}
         >
           <Typography variant="h4" component="h2" gutterBottom>
@@ -170,10 +191,11 @@ function HomePage() {
             container
             spacing={4}
             sx={{
-              mb: 4,
               justifyContent: "center",
               alignItems: "center",
               width: "100%",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             }}
           >
             {campañas.map((campaña, index) => (
@@ -191,6 +213,7 @@ function HomePage() {
               >
                 <Card
                   sx={{
+                    borderRadius: 4,
                     height: "100%",
                     display: "flex",
                     width: "75%",
@@ -201,11 +224,17 @@ function HomePage() {
                 >
                   <CardContent>
                     <Typography variant="h6" component="div" gutterBottom>
-                      {campaña}
+                      {campaña.nombre}
                     </Typography>
+                    <img
+                      src={`https://placehold.co/200`}
+                      alt={campaña.nombre}
+                      width="100%"
+                      height="100%"
+                    />
                     <Typography variant="body2" color="text.secondary">
-                      Una breve descripción sobre la campaña "{campaña}" para
-                      destacar su importancia.
+                      Una breve descripción sobre la campaña "
+                      {campaña.descripcion}" para destacar su importancia.
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -214,7 +243,7 @@ function HomePage() {
                       color="primary"
                       variant="contained"
                       component={Link}
-                      to={`/campaigns/${index}`}
+                      to={`/campaigns/${campaña.id}`}
                     >
                       Donar ahora
                     </Button>
@@ -225,6 +254,7 @@ function HomePage() {
           </Grid2>
         </Container>
       </Box>
+      <Footer />
     </>
   );
 }

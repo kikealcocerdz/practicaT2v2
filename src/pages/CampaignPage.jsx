@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import CampaignCard from "../components/CampaignCard";
-import { Container, Grid } from "@mui/material";
+import { Container, Grid2 } from "@mui/material";
 
 function CampaignPage() {
   const campaigns = [
@@ -15,7 +15,6 @@ function CampaignPage() {
       title: "Salud Accesible",
       description: "Financia tratamientos médicos.",
     },
-    // Más campañas...
   ];
 
   const handleDonate = (campaignId) => {
@@ -26,17 +25,17 @@ function CampaignPage() {
     <>
       <Navbar />
       <Container>
-        <Grid container>
+        <Grid2 container>
           {campaigns.map((campaign) => (
-            <Grid item xs={12} sm={6} md={4} key={campaign.id}>
+            <Grid2 item xs={12} sm={6} md={4} key={campaign.id}>
               <CampaignCard
                 title={campaign.title}
                 description={campaign.description}
                 onDonate={() => handleDonate(campaign.id)}
               />
-            </Grid>
+            </Grid2>
           ))}
-        </Grid>
+        </Grid2>
       </Container>
     </>
   );
