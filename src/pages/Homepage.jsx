@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom"; // Asegúrate de tener react-router-dom configurado
 import Navbar from "../components/Navbar";
 import heroBackgroundImage from "../assets/hero-background-image.jpg";
@@ -11,11 +11,19 @@ import {
   Card,
   CardContent,
   CardActions,
-  Grid2,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
 } from "@mui/material";
 import Footer from "../components/Footer";
 
 function HomePage() {
+  const [openModal, setOpenModal] = useState(false); // Estado para el modal
+  const [selectedCampaign, setSelectedCampaign] = useState(null); // Campaña seleccionada
+  const [donationAmount, setDonationAmount] = useState(""); // Monto de la donación
+
   const campañas = [
     {
       id: 1,
@@ -39,6 +47,27 @@ function HomePage() {
       imagen: "https://placehold.co/200",
     },
   ];
+
+  // Manejar apertura del modal
+  const handleOpenModal = (campaign) => {
+    setSelectedCampaign(campaign);
+    setOpenModal(true);
+  };
+
+  // Manejar cierre del modal
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setDonationAmount("");
+  };
+
+  // Manejar donación
+  const handleDonate = () => {
+    console.log(
+      `Donación realizada: ${donationAmount}€ a la campaña ${selectedCampaign.nombre}`
+    );
+    handleCloseModal();
+    alert(`¡Gracias por tu donación de ${donationAmount}€ a ${selectedCampaign.nombre}!`);
+  };
 
   return (
     <>
@@ -86,7 +115,6 @@ function HomePage() {
                 borderRadius: "15px",
                 padding: "15px",
                 fontFamily: "Playfair Display, serif",
-                opacity: 1,
               }}
             >
               DonarAUnClick
@@ -128,7 +156,7 @@ function HomePage() {
               ¿Qué es DonarAUnClick?
             </Typography>
             <Typography
-              variant="p"
+              variant="body1"
               component="p"
               align="justify"
               gutterBottom
@@ -176,7 +204,7 @@ function HomePage() {
           maxWidth="lg"
           id="campaigns"
           sx={{
-            bgcolor: "rgba(255, 255, 255, 0.8)", // Fondo translúcido para el contenido
+            bgcolor: "rgba(255, 255, 255, 0.8)",
             p: 4,
             borderRadius: 2,
             boxShadow: 3,
@@ -187,7 +215,7 @@ function HomePage() {
           <Typography variant="h4" component="h2" gutterBottom>
             Campañas destacadas
           </Typography>
-          <Grid2
+          <Grid
             container
             spacing={4}
             sx={{
@@ -199,11 +227,8 @@ function HomePage() {
             }}
           >
             {campañas.map((campaña, index) => (
-              <Grid2
+              <Grid
                 item
-                xs={12}
-                sm={6}
-                md={4}
                 key={index}
                 sx={{
                   width: "100%",
@@ -227,14 +252,13 @@ function HomePage() {
                       {campaña.nombre}
                     </Typography>
                     <img
-                      src={`https://placehold.co/200`}
+                      src={campaña.imagen}
                       alt={campaña.nombre}
                       width="100%"
                       height="100%"
                     />
                     <Typography variant="body2" color="text.secondary">
-                      Una breve descripción sobre la campaña "
-                      {campaña.descripcion}" para destacar su importancia.
+                      {campaña.descripcion}
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -242,18 +266,60 @@ function HomePage() {
                       size="large"
                       color="primary"
                       variant="contained"
-                      component={Link}
-                      to={`/campaigns/${campaña.id}`}
+                      onClick={() => handleOpenModal(campaña)}
                     >
                       Donar ahora
                     </Button>
                   </CardActions>
                 </Card>
-              </Grid2>
+              </Grid>
             ))}
-          </Grid2>
+          </Grid>
         </Container>
       </Box>
+
+      <Dialog open={openModal} onClose={handleCloseModal}>
+        <DialogTitle
+          sx={{ 
+            marginTop: 1
+          }}
+        >Donar a {selectedCampaign?.nombre}</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Cantidad a donar (€)"
+            type="number"
+            fullWidth
+            value={donationAmount}
+            onChange={(e) => setDonationAmount(e.target.value)}
+            InputProps={{
+              inputProps: { min: 1 },
+            }}
+            sx={{ 
+              marginBottom: 1,
+              marginTop: 2
+            }}
+          />
+        </DialogContent>
+        <DialogActions
+          sx={{
+            paddingBottom: "16px", // Añade un margen inferior al contenedor de botones
+            display: "flex",       // Habilitar flexbox
+            justifyContent: "center", // Centrar horizontalmente
+          }}
+        >
+          <Button onClick={handleCloseModal} color="secondary">
+            Cancelar
+          </Button>
+          <Button
+            onClick={handleDonate}
+            color="primary"
+            variant="contained"
+            disabled={!donationAmount || donationAmount <= 0}
+          >
+            Confirmar donación
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Footer />
     </>
   );
