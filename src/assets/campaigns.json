@@ -1,0 +1,39 @@
+[
+    {
+      "id": 1,
+      "title": "Educación para Todos",
+      "description": "Ayuda a niños a obtener educación básica. Mejorarás sus oportunidades futuras.",
+      "fullDescription": "Con tu ayuda, podemos construir aulas, proporcionar materiales escolares y capacitar a docentes en comunidades vulnerables. Con solo 50 €, podemos financiar la matrícula de un niño durante un año completo, y con 150 €, podemos equipar un aula con materiales educativos para 30 estudiantes. Tu contribución hace una diferencia real en la vida de estos niños."
+    },
+    {
+      "id": 2,
+      "title": "Salud Accesible",
+      "description": "Financia tratamientos médicos para quienes más lo necesitan.",
+      "fullDescription": "Tus donaciones pueden salvar vidas financiando cirugías, medicamentos esenciales y atención médica preventiva en regiones desfavorecidas. Con 100 €, podemos proporcionar una operación de emergencia para un paciente necesitado. Con 250 €, podemos financiar un curso de salud preventiva para 50 personas en áreas rurales, reduciendo enfermedades evitables."
+    },
+    {
+      "id": 3,
+      "title": "Protección del Medio Ambiente",
+      "description": "Apoya iniciativas de reforestación y preservación de biodiversidad.",
+      "fullDescription": "Con tu apoyo, podemos restaurar bosques, proteger especies en peligro de extinción y educar sobre sostenibilidad. Con una donación de 20 €, plantamos 10 árboles en áreas deforestadas. Con 500 €, podemos financiar un programa educativo sobre biodiversidad para 200 niños, enseñándoles la importancia de proteger la naturaleza."
+    },
+    {
+      "id": 4,
+      "title": "Ayuda a Refugiados",
+      "description": "Proporciona alimentos y refugio a familias desplazadas.",
+      "fullDescription": "Millones de personas necesitan ayuda inmediata. Tus donaciones pueden garantizar acceso a alimentos, ropa y vivienda temporal para quienes huyen de conflictos y desastres. Con 50 €, podemos proveer a una familia de 4 personas con comida y agua durante una semana. Con 200 €, podemos proporcionar una tienda de campaña y suministros básicos a una familia durante su estancia en un campamento de refugiados."
+    },
+    {
+      "id": 5,
+      "title": "Agua Potable para Todos",
+      "description": "Proporciona acceso a agua limpia a comunidades sin recursos.",
+      "fullDescription": "Tu donación puede llevar agua potable a zonas necesitadas. Con 75 €, podemos instalar un sistema de purificación de agua que beneficiará a 100 personas durante un año. Con 500 €, podemos construir un pozo comunitario en una zona rural, proporcionando agua limpia a toda una comunidad durante años."
+    },
+    {
+      "id": 6,
+      "title": "Apoyo a la Infancia en Riesgo",
+      "description": "Protege a los niños más vulnerables de la violencia y el abuso.",
+      "fullDescription": "Con tu apoyo, podemos ofrecer refugio, educación y atención psicológica a niños que han sufrido abuso o explotación. Con 80 €, podemos financiar un programa de protección infantil para una familia durante un mes. Con 300 €, podemos proporcionar terapia psicológica y apoyo emocional a 5 niños durante un año, ayudándoles a superar los traumas."
+    }
+  ]
+  
