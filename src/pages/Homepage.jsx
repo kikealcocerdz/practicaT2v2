@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Asegúrate de tener react-router-dom configurado
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import heroBackgroundImage from "../assets/hero-background-image.jpg";
 import {
@@ -11,18 +11,13 @@ import {
   Card,
   CardContent,
   CardActions,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
 } from "@mui/material";
 import Footer from "../components/Footer";
+import DonationModal from "../components/DonationModal"; // Importamos el nuevo componente
 
 function HomePage() {
   const [openModal, setOpenModal] = useState(false); // Estado para el modal
   const [selectedCampaign, setSelectedCampaign] = useState(null); // Campaña seleccionada
-  const [donationAmount, setDonationAmount] = useState(""); // Monto de la donación
 
   const campañas = [
     {
@@ -57,16 +52,6 @@ function HomePage() {
   // Manejar cierre del modal
   const handleCloseModal = () => {
     setOpenModal(false);
-    setDonationAmount("");
-  };
-
-  // Manejar donación
-  const handleDonate = () => {
-    console.log(
-      `Donación realizada: ${donationAmount}€ a la campaña ${selectedCampaign.nombre}`
-    );
-    handleCloseModal();
-    alert(`¡Gracias por tu donación de ${donationAmount}€ a ${selectedCampaign.nombre}!`);
   };
 
   return (
@@ -278,48 +263,13 @@ function HomePage() {
         </Container>
       </Box>
 
-      <Dialog open={openModal} onClose={handleCloseModal}>
-        <DialogTitle
-          sx={{ 
-            marginTop: 1
-          }}
-        >Donar a {selectedCampaign?.nombre}</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Cantidad a donar (€)"
-            type="number"
-            fullWidth
-            value={donationAmount}
-            onChange={(e) => setDonationAmount(e.target.value)}
-            InputProps={{
-              inputProps: { min: 1 },
-            }}
-            sx={{ 
-              marginBottom: 1,
-              marginTop: 2
-            }}
-          />
-        </DialogContent>
-        <DialogActions
-          sx={{
-            paddingBottom: "16px", // Añade un margen inferior al contenedor de botones
-            display: "flex",       // Habilitar flexbox
-            justifyContent: "center", // Centrar horizontalmente
-          }}
-        >
-          <Button onClick={handleCloseModal} color="secondary">
-            Cancelar
-          </Button>
-          <Button
-            onClick={handleDonate}
-            color="primary"
-            variant="contained"
-            disabled={!donationAmount || donationAmount <= 0}
-          >
-            Confirmar donación
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {/* Usamos el nuevo componente para el modal */}
+      <DonationModal
+        open={openModal}
+        onClose={handleCloseModal}
+        campaign={selectedCampaign}
+      />
+
       <Footer />
     </>
   );
