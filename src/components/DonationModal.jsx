@@ -13,16 +13,18 @@ function DonationModal({ open, onClose, campaign }) {
 
   const handleDonate = () => {
     console.log(
-      `Donación realizada: ${donationAmount}€ a la campaña ${campaign.nombre}`
+      `Donación realizada: ${donationAmount}€ a la campaña ${campaign.title}`
     );
-    alert(`¡Gracias por tu donación de ${donationAmount}€ a ${campaign.nombre}!`);
+    alert(
+      `¡Gracias por tu donación de ${donationAmount}€ a ${campaign.title}!`
+    );
     setDonationAmount("");
     onClose();
   };
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle sx={{ marginTop: 1 }}>Donar a {campaign?.nombre}</DialogTitle>
+      <DialogTitle sx={{ marginTop: 1 }}>Donar a {campaign?.title}</DialogTitle>
       <DialogContent>
         <TextField
           label="Cantidad a donar (€)"
