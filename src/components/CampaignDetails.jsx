@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
   Container,
   Typography,
@@ -7,35 +8,36 @@ import {
   TextField,
   Card,
   CardContent,
+  LinearProgress,
 } from "@mui/material";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import campaignsData from "../assets/campaigns.json";
 
-const CampaignDetails = ({ match }) => {
-  // Datos de ejemplo para la campaña. En producción, podrías cargar esto dinámicamente según el ID.
-  const campaign = {
-    id: match?.params?.id || "1",
-    title: "Educación para todos",
-    description:
-      "Brindar acceso a la educación básica a niños en comunidades vulnerables. Tu donación se destinará a la compra de útiles escolares, uniformes, y mejoras en las instalaciones educativas.",
-    logo: "https://via.placeholder.com/150", // Logo de la campaña
-    impact: [
-      "Cada $10 ayuda a comprar un libro escolar.",
-      "Con $50 se puede proveer uniformes completos a un niño.",
-      "Una donación de $100 puede mejorar un aula escolar.",
-    ],
-    raised: 6000,
-    goal: 10000,
-  };
-
+const CampaignDetails = () => {
   const [donationAmount, setDonationAmount] = useState("");
+  const { id } = useParams();
+
+  // Resettear la posición de scroll cuando se monta el componente
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Busca la campaña que coincida con el ID de la URL
+  const campaign =
+    campaignsData.find((c) => c.id === parseInt(id)) || campaignsData[0]; // Si no se encuentra, se usa la primera campaña
+
+  // Calcula el porcentaje de progreso
+  const progressPercentage = Math.round(
+    (campaign.raised / campaign.goal) * 100
+  );
 
   const handleDonate = () => {
     if (!donationAmount || isNaN(donationAmount) || donationAmount <= 0) {
       alert("Por favor, introduce un importe válido para donar.");
       return;
     }
-    alert(`¡Gracias por donar $${donationAmount}!`);
+    alert(`¡Gracias por donar $${donationAmount} a ${campaign.title}!`);
     // Aquí podrías integrar tu lógica para procesar la donación (API, backend, etc.).
   };
 
@@ -65,7 +67,7 @@ const CampaignDetails = ({ match }) => {
           }}
         >
           <img
-            src={campaign.logo}
+            src={campaign.image}
             alt={`${campaign.title} logo`}
             style={{ width: "120px", height: "120px", borderRadius: "50%" }}
           />
@@ -134,11 +136,53 @@ const CampaignDetails = ({ match }) => {
             backgroundColor: "#f9f9f9",
           }}
         >
-          <Typography variant="h6">Progreso de la campaña</Typography>
-          <Typography variant="body1">
+          <Typography variant="h6" gutterBottom>
+            Progreso de la campaña
+          </Typography>
+
+          {/* Información del progreso */}
+          <Typography variant="body1" gutterBottom>
             Meta: ${campaign.goal.toLocaleString()} <br />
             Recaudado: ${campaign.raised.toLocaleString()} <br />
             Faltante: ${(campaign.goal - campaign.raised).toLocaleString()}
+          </Typography>
+
+          {/* Barra de progreso accesible */}
+          <Box
+            sx={{
+              width: "100%",
+              mt: 2,
+              mb: 1,
+            }}
+          >
+            <LinearProgress
+              variant="determinate"
+              value={progressPercentage}
+              sx={{
+                height: 10,
+                borderRadius: 5,
+                backgroundColor: "#e0e0e0",
+                "& .MuiLinearProgress-bar": {
+                  backgroundColor: "#2e7d32",
+                  borderRadius: 5,
+                },
+              }}
+              aria-label="Progreso de la campaña"
+              role="progressbar"
+              aria-valuenow={progressPercentage}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            />
+          </Box>
+
+          {/* Porcentaje de progreso */}
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ mt: 1 }}
+            aria-live="polite"
+          >
+            {progressPercentage}% completado
           </Typography>
         </Box>
       </Container>

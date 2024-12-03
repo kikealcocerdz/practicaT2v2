@@ -7,9 +7,15 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const CampaignCard = ({ campaña, onClickAction }) => {
+const CampaignCard = ({ campaña }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/campaigns/${campaña.id}`);
+  };
+
   return (
     <Card
       sx={{
@@ -41,9 +47,9 @@ const CampaignCard = ({ campaña, onClickAction }) => {
           size="large"
           color="primary"
           variant="contained"
-          onClick={onClickAction}
+          onClick={handleClick}
         >
-          Donar ahora
+          Ver detalles
         </Button>
       </CardActions>
     </Card>
