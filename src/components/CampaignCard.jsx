@@ -9,50 +9,39 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const CampaignCard = ({ id, nombre, descripcion, imagen }) => {
+const CampaignCard = ({ campaña, onClickAction }) => {
   return (
     <Card
       sx={{
         borderRadius: 4,
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
         height: "100%",
-        boxShadow: 3,
-        width: "100%",
+        display: "flex",
+        width: "75%",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      {/* Imagen de la campaña */}
-      <Box
-        sx={{
-          width: "100%",
-          height: 200,
-          backgroundImage: `url(${imagen})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
-
-      {/* Contenido de la campaña */}
       <CardContent>
-        <Typography variant="h5" fontWeight="bold" gutterBottom>
-          {nombre}
+        <Typography variant="h6" component="div" gutterBottom>
+          {campaña.title}
         </Typography>
+        <img
+          src={campaña.image}
+          alt={campaña.title}
+          width="100%"
+          height="100%"
+        />
         <Typography variant="body2" color="text.secondary">
-          {descripcion}
+          {campaña.description}
         </Typography>
       </CardContent>
-
-      {/* Botón de acción */}
       <CardActions>
         <Button
           size="large"
           color="primary"
           variant="contained"
-          component={Link}
-          to={`/campaigns/${id}`}
-          sx={{ margin: "0 auto" }}
+          onClick={onClickAction}
         >
           Donar ahora
         </Button>

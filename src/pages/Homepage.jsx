@@ -14,34 +14,16 @@ import {
 } from "@mui/material";
 import Footer from "../components/Footer";
 import DonationModal from "../components/DonationModal"; // Importamos el nuevo componente
+import CampaignCard from "../components/CampaignCard";
+import campaignsData from "../assets/campaigns.json";
 
 function HomePage() {
   const [openModal, setOpenModal] = useState(false); // Estado para el modal
   const [selectedCampaign, setSelectedCampaign] = useState(null); // Campaña seleccionada
 
-  const campañas = [
-    {
-      id: 1,
-      nombre: "Educación para todos",
-      descripcion:
-        "Brindar acceso a la educación básica a niños en comunidades vulnerables.",
-      imagen: "https://placehold.co/200",
-    },
-    {
-      id: 2,
-      nombre: "Alimentos para familias",
-      descripcion:
-        "Proveer alimentos esenciales a familias necesitadas en comunidades rurales.",
-      imagen: "https://placehold.co/200",
-    },
-    {
-      id: 3,
-      nombre: "Agua limpia",
-      descripcion:
-        "Ayudar a construir sistemas de agua potable en regiones remotas.",
-      imagen: "https://placehold.co/200",
-    },
-  ];
+  // Conseguir campañas destacadas
+  const campañas = campaignsData;
+  const campañasDestacadas = campañas.filter((campaña) => campaña.highlighted);
 
   // Manejar apertura del modal
   const handleOpenModal = (campaign) => {
@@ -211,7 +193,7 @@ function HomePage() {
               gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             }}
           >
-            {campañas.map((campaña, index) => (
+            {campañasDestacadas.map((campaña, index) => (
               <Grid
                 item
                 key={index}
@@ -221,42 +203,10 @@ function HomePage() {
                   justifyContent: "center",
                 }}
               >
-                <Card
-                  sx={{
-                    borderRadius: 4,
-                    height: "100%",
-                    display: "flex",
-                    width: "75%",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <CardContent>
-                    <Typography variant="h6" component="div" gutterBottom>
-                      {campaña.nombre}
-                    </Typography>
-                    <img
-                      src={campaña.imagen}
-                      alt={campaña.nombre}
-                      width="100%"
-                      height="100%"
-                    />
-                    <Typography variant="body2" color="text.secondary">
-                      {campaña.descripcion}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      size="large"
-                      color="primary"
-                      variant="contained"
-                      onClick={() => handleOpenModal(campaña)}
-                    >
-                      Donar ahora
-                    </Button>
-                  </CardActions>
-                </Card>
+                <CampaignCard
+                  campaña={campaña}
+                  onClickAction={() => handleOpenModal(campaña)}
+                />
               </Grid>
             ))}
           </Grid>
