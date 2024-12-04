@@ -10,13 +10,15 @@ import {
   CardContent,
   LinearProgress,
 } from "@mui/material";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import campaignsData from "../assets/campaigns.json";
+import { useDonations } from "../context/DonationContext";
 
 const CampaignDetails = () => {
   const [donationAmount, setDonationAmount] = useState("");
   const { id } = useParams();
+  const { addDonation } = useDonations();
 
   // Resettear la posición de scroll cuando se monta el componente
   useEffect(() => {
@@ -37,8 +39,19 @@ const CampaignDetails = () => {
       alert("Por favor, introduce un importe válido para donar.");
       return;
     }
+
+    const donationData = {
+      campaignId: campaign.id,
+      campaignTitle: campaign.title,
+      amount: Number(donationAmount),
+      image: campaign.image,
+    };
+
+    addDonation(donationData);
+
     alert(`¡Gracias por donar $${donationAmount} a ${campaign.title}!`);
     // Aquí podrías integrar tu lógica para procesar la donación (API, backend, etc.).
+    setDonationAmount("");
   };
 
   return (

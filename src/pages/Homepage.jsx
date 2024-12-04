@@ -142,7 +142,7 @@ function HomePage() {
               color="primary"
               variant="contained"
               component={Link}
-              to="#campaigns"
+              to="/campaigns"
               sx={{
                 marginTop: 2,
                 width: "80%",
