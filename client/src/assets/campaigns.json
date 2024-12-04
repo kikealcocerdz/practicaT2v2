@@ -11,7 +11,7 @@
       "Con $50 se puede proveer uniformes completos a un niño.",
       "Una donación de $100 puede mejorar un aula escolar."
     ],
-    "raised": 6000,
+    "raised": 7010,
     "goal": 10000
   },
   {
@@ -26,7 +26,7 @@
       "Con $50 alimentas a una familia por una semana.",
       "Con $200 ayudas a establecer un huerto comunitario."
     ],
-    "raised": 3000,
+    "raised": 4690,
     "goal": 8000
   },
   {
@@ -71,7 +71,7 @@
       "Con $500 construimos un pozo comunitario en una zona rural, proporcionando agua limpia a toda una comunidad durante años.",
       "Con $1000 apoyas la creación de un parque nacional."
     ],
-    "raised": 1000,
+    "raised": 1400,
     "goal": 5000
   },
   {
@@ -86,7 +86,7 @@
       "Con $300 proporcionamos terapia psicológica y apoyo emocional a 5 niños durante un año.",
       "Con $1000 apoyas la creación de un parque nacional."
     ],
-    "raised": 1000,
+    "raised": 2200,
     "goal": 5000
   }
 ]

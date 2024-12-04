@@ -25,6 +25,9 @@ function DonationHistoryPage() {
   const { donations, clearHistory } = useDonations();
   const [openDialog, setOpenDialog] = React.useState(false);
 
+  // Ordenar las donaciones por ID de forma descendente (más recientes primero)
+  const sortedDonations = [...donations].sort((a, b) => b.id - a.id);
+
   const handleClearHistory = () => {
     setOpenDialog(true);
   };
@@ -68,7 +71,7 @@ function DonationHistoryPage() {
             </Paper>
           ) : (
             <List>
-              {donations.map((donation) => (
+              {sortedDonations.map((donation) => (
                 <ListItem
                   key={donation.id}
                   component={Paper}

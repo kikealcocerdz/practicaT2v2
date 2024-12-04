@@ -9,6 +9,11 @@ import {
   Card,
   CardContent,
   LinearProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Alert,
 } from "@mui/material";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -17,42 +22,86 @@ import { useDonations } from "../context/DonationContext";
 
 const CampaignDetails = () => {
   const [donationAmount, setDonationAmount] = useState("");
+  const [campaign, setCampaign] = useState(null);
   const { id } = useParams();
   const { addDonation } = useDonations();
+  const [openModal, setOpenModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState({
+    text: "",
+    severity: "success",
+  });
 
-  // Resettear la posición de scroll cuando se monta el componente
+  // Cargar los datos de la campaña
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    const selectedCampaign =
+      campaignsData.find((c) => c.id === parseInt(id)) || campaignsData[0];
+    setCampaign(selectedCampaign);
+  }, [id]);
 
-  // Busca la campaña que coincida con el ID de la URL
-  const campaign =
-    campaignsData.find((c) => c.id === parseInt(id)) || campaignsData[0]; // Si no se encuentra, se usa la primera campaña
+  const handleDonate = async () => {
+    if (!donationAmount || isNaN(donationAmount) || donationAmount <= 0) {
+      setModalMessage({
+        text: "Por favor, introduce un importe válido para donar.",
+        severity: "error",
+      });
+      setOpenModal(true);
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/campaigns/${campaign.id}/donate`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ amount: Number(donationAmount) }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al procesar la donación");
+      }
+
+      const updatedCampaign = await response.json();
+
+      // Actualizar el estado local de la campaña
+      setCampaign((prevCampaign) => ({
+        ...prevCampaign,
+        raised: updatedCampaign.raised,
+      }));
+
+      const donationData = {
+        campaignId: campaign.id,
+        campaignTitle: campaign.title,
+        amount: Number(donationAmount),
+        image: campaign.image,
+      };
+
+      addDonation(donationData);
+      setModalMessage({
+        text: `¡Gracias por donar $${donationAmount} a ${campaign.title}!`,
+        severity: "success",
+      });
+      setOpenModal(true);
+      setDonationAmount("");
+    } catch (error) {
+      console.error("Error:", error);
+      setModalMessage({
+        text: "Hubo un error al procesar tu donación. Por favor, inténtalo de nuevo.",
+        severity: "error",
+      });
+      setOpenModal(true);
+    }
+  };
+
+  if (!campaign) return null;
 
   // Calcula el porcentaje de progreso
   const progressPercentage = Math.round(
     (campaign.raised / campaign.goal) * 100
   );
-
-  const handleDonate = () => {
-    if (!donationAmount || isNaN(donationAmount) || donationAmount <= 0) {
-      alert("Por favor, introduce un importe válido para donar.");
-      return;
-    }
-
-    const donationData = {
-      campaignId: campaign.id,
-      campaignTitle: campaign.title,
-      amount: Number(donationAmount),
-      image: campaign.image,
-    };
-
-    addDonation(donationData);
-
-    alert(`¡Gracias por donar $${donationAmount} a ${campaign.title}!`);
-    // Aquí podrías integrar tu lógica para procesar la donación (API, backend, etc.).
-    setDonationAmount("");
-  };
 
   return (
     <>
@@ -199,6 +248,37 @@ const CampaignDetails = () => {
           </Typography>
         </Box>
       </Container>
+
+      {/* Modal accesible */}
+      <Dialog
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {modalMessage.severity === "success" ? "¡Donación Exitosa!" : "Aviso"}
+        </DialogTitle>
+        <DialogContent>
+          <Alert
+            severity={modalMessage.severity}
+            id="alert-dialog-description"
+            sx={{ mt: 1 }}
+          >
+            {modalMessage.text}
+          </Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setOpenModal(false)}
+            autoFocus
+            variant="contained"
+          >
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Footer />
     </>
   );

@@ -1,8 +1,43 @@
-# React + Vite
+# Donar a un Click
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Una plataforma web que permite a los usuarios realizar donaciones a diferentes campañas benéficas a través de una interfaz accesible.
 
-Currently, two official plugins are available:
+## Instalación
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Instala las dependencias (se incluyen las dependencias de cliente y servidor):
+
+```bash
+npm install
+```
+
+3. Inicia el servidor y el cliente de forma simultánea:
+
+```bash
+npm run dev
+```
+
+4. Accede a la web en tu navegador:
+
+```bash
+http://localhost:5173
+```
+
+5. El servidor se ejecuta por defecto en el puerto 3001.
+
+## Estructura del Proyecto
+
+- `/client` - Aplicación frontend (React + Vite)
+- `/server` - Servidor backend (Express)
+- `/client/src/assets` - Archivos estáticos y datos
+- `/client/src/components` - Componentes React reutilizables
+- `/client/src/pages` - Páginas de la aplicación
+
+## Tecnologías Utilizadas
+
+- Frontend:
+  - React
+  - Material-UI
+  - Vite
+- Backend:
+  - Node.js
+  - Express
