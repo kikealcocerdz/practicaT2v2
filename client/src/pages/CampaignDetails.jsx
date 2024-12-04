@@ -111,12 +111,10 @@ const CampaignDetails = () => {
         maxWidth="md"
         sx={{
           paddingTop: 10,
-          paddingBottom: 4,
           display: "flex",
           flexDirection: "column",
           gap: 4,
           alignItems: "center",
-          minHeight: "calc(100vh - 64px - 200px)",
         }}
       >
         {/* Encabezado de la campaña */}
@@ -199,22 +197,45 @@ const CampaignDetails = () => {
           }}
         >
           <Typography variant="h6">Contribuye a esta campaña</Typography>
-          <TextField
-            type="number"
-            label="Introduce el importe (€)"
-            variant="outlined"
-            value={donationAmount}
-            onChange={(e) => setDonationAmount(e.target.value)}
-            sx={{ width: "50%" }}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleDonate}
-            sx={{ padding: "10px 20px", fontSize: "16px" }}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              gap: 2,
+              // Estilos responsivos
+              flexDirection: {
+                xs: "column",
+                sm: "row",
+              },
+              gap: {
+                xs: 1,
+                sm: 2, // Mayor separación en pantallas medianas o mayores
+              },
+            }}
           >
-            Donar ahora
-          </Button>
+            <TextField
+              type="number"
+              label="Introduce el importe (€)"
+              variant="outlined"
+              value={donationAmount}
+              onChange={(e) => setDonationAmount(e.target.value)}
+              sx={{ width: "70%" }}
+            />
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleDonate}
+              sx={{
+                padding: "10px 40px",
+                fontSize: "16px",
+                fontWeight: "bold",
+              }}
+            >
+              Donar ahora
+            </Button>
+          </Box>
         </Box>
 
         {/* Progreso de la campaña */}
@@ -226,6 +247,7 @@ const CampaignDetails = () => {
             boxShadow: 1,
             textAlign: "center",
             backgroundColor: "#f9f9f9",
+            mb: 4,
           }}
         >
           <Typography variant="h6" gutterBottom>
