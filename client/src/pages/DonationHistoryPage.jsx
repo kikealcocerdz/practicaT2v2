@@ -85,7 +85,7 @@ function DonationHistoryPage() {
                     secondary={
                       <>
                         <Typography component="span" variant="body2">
-                          Monto: ${donation.amount}
+                          Cantidad: {donation.amount}€
                         </Typography>
                         <br />
                         <Typography component="span" variant="body2">

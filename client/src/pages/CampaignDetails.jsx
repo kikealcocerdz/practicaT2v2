@@ -81,7 +81,7 @@ const CampaignDetails = () => {
 
       addDonation(donationData);
       setModalMessage({
-        text: `¡Gracias por donar $${donationAmount} a ${campaign.title}!`,
+        text: `¡Gracias por donar ${donationAmount}€ a ${campaign.title}!`,
         severity: "success",
       });
       setOpenModal(true);
@@ -99,9 +99,10 @@ const CampaignDetails = () => {
   if (!campaign) return null;
 
   // Calcula el porcentaje de progreso
-  const progressPercentage = Math.round(
-    (campaign.raised / campaign.goal) * 100
-  );
+  const actualPercentage = Math.round((campaign.raised / campaign.goal) * 100);
+
+  // Máximo valor de la barra de progreso a 100
+  const progressBarValue = Math.min(actualPercentage, 100);
 
   return (
     <>
@@ -109,7 +110,7 @@ const CampaignDetails = () => {
       <Container
         maxWidth="md"
         sx={{
-          paddingTop: 4,
+          paddingTop: 10,
           paddingBottom: 4,
           display: "flex",
           flexDirection: "column",
@@ -142,20 +143,41 @@ const CampaignDetails = () => {
         </Box>
 
         {/* Detalles del impacto */}
-        <Card sx={{ width: "100%", boxShadow: 2, borderRadius: 2 }}>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              ¿Cómo ayuda tu donación?
-            </Typography>
-            <ul>
-              {campaign.impact.map((item, index) => (
-                <li key={index}>
-                  <Typography variant="body1">{item}</Typography>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+        {(campaign.fullDescription ||
+          campaign.impact.some((item) => item !== "")) && (
+          <Card sx={{ width: "100%", boxShadow: 2, borderRadius: 2 }}>
+            <CardContent>
+              {campaign.fullDescription && (
+                <>
+                  <Typography variant="h6" gutterBottom>
+                    Descripción
+                  </Typography>
+                  <Typography variant="body1" paragraph>
+                    {campaign.fullDescription}
+                  </Typography>
+                </>
+              )}
+
+              {campaign.impact.some((item) => item !== "") && (
+                <>
+                  <Typography variant="h6" gutterBottom>
+                    ¿Cómo ayuda tu donación?
+                  </Typography>
+                  <ul>
+                    {campaign.impact.map(
+                      (item, index) =>
+                        item && (
+                          <li key={index}>
+                            <Typography variant="body1">{item}</Typography>
+                          </li>
+                        )
+                    )}
+                  </ul>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        )}
 
         {/* Formulario de donación */}
         <Box
@@ -171,7 +193,7 @@ const CampaignDetails = () => {
           <Typography variant="h6">Contribuye a esta campaña</Typography>
           <TextField
             type="number"
-            label="Introduce el importe ($)"
+            label="Introduce el importe (€)"
             variant="outlined"
             value={donationAmount}
             onChange={(e) => setDonationAmount(e.target.value)}
@@ -204,9 +226,10 @@ const CampaignDetails = () => {
 
           {/* Información del progreso */}
           <Typography variant="body1" gutterBottom>
-            Meta: ${campaign.goal.toLocaleString()} <br />
-            Recaudado: ${campaign.raised.toLocaleString()} <br />
-            Faltante: ${(campaign.goal - campaign.raised).toLocaleString()}
+            Meta: {campaign.goal.toLocaleString()}€ <br />
+            Recaudado: {campaign.raised.toLocaleString()}€ <br />
+            Faltante:
+            {Math.max(campaign.goal - campaign.raised, 0).toLocaleString()}€
           </Typography>
 
           {/* Barra de progreso accesible */}
@@ -219,7 +242,7 @@ const CampaignDetails = () => {
           >
             <LinearProgress
               variant="determinate"
-              value={progressPercentage}
+              value={progressBarValue}
               sx={{
                 height: 10,
                 borderRadius: 5,
@@ -231,7 +254,7 @@ const CampaignDetails = () => {
               }}
               aria-label="Progreso de la campaña"
               role="progressbar"
-              aria-valuenow={progressPercentage}
+              aria-valuenow={progressBarValue}
               aria-valuemin={0}
               aria-valuemax={100}
             />
@@ -244,7 +267,7 @@ const CampaignDetails = () => {
             sx={{ mt: 1 }}
             aria-live="polite"
           >
-            {progressPercentage}% completado
+            {actualPercentage}% completado
           </Typography>
         </Box>
       </Container>

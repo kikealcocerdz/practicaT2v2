@@ -46,6 +46,22 @@ app.put("/api/campaigns/:id/donate", async (req, res) => {
   }
 });
 
+app.post("/api/campaigns", async (req, res) => {
+  try {
+    const newCampaign = req.body;
+    const data = await fs.readFile(CAMPAIGNS_FILE, "utf8");
+    const campaigns = JSON.parse(data);
+
+    campaigns.push(newCampaign);
+
+    await fs.writeFile(CAMPAIGNS_FILE, JSON.stringify(campaigns, null, 2));
+    res.status(201).json(newCampaign);
+  } catch (error) {
+    console.error("Error al crear la campaña:", error);
+    res.status(500).json({ error: "Error al crear la campaña" });
+  }
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -7,6 +7,7 @@ import CampaignDetails from "./pages/CampaignDetails";
 import DonationHistoryPage from "./pages/DonationHistoryPage";
 import CampaignPage from "./pages/CampaignPage";
 import { DonationProvider } from "./context/DonationContext";
+import CreateCampaignPage from "./pages/CreateCampaignPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/campaigns/:id" element={<CampaignDetails />} />
             <Route path="/campaigns" element={<CampaignPage />} />
             <Route path="/history" element={<DonationHistoryPage />} />
+            <Route path="/campaigns/create" element={<CreateCampaignPage />} />
           </Routes>
         </Router>
       </ThemeProvider>

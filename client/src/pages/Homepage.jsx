@@ -13,7 +13,6 @@ import {
   CardActions,
 } from "@mui/material";
 import Footer from "../components/Footer";
-import DonationModal from "../components/DonationModal"; // Importamos el nuevo componente
 import CampaignCard from "../components/CampaignCard";
 import campaignsData from "../assets/campaigns.json";
 
@@ -212,13 +211,6 @@ function HomePage() {
           </Grid>
         </Container>
       </Box>
-
-      {/* Usamos el nuevo componente para el modal */}
-      <DonationModal
-        open={openModal}
-        onClose={handleCloseModal}
-        campaign={selectedCampaign}
-      />
 
       <Footer />
     </>
