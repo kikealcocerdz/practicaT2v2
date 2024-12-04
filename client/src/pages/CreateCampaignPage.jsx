@@ -14,8 +14,10 @@ import {
   MenuItem,
   Checkbox,
   FormControlLabel,
+  Input,
 } from "@mui/material";
 import Navbar from "../components/Navbar";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 function CreateCampaignPage() {
   const navigate = useNavigate();
@@ -24,18 +26,43 @@ function CreateCampaignPage() {
     description: "",
     fullDescription: "",
     goal: "",
-    image: "https://placehold.co/200",
+    image: null,
+    imagePreview: "https://placehold.co/200",
     highlighted: false,
     impact: ["", "", ""],
   });
   const [error, setError] = useState("");
 
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB en bytes
+
   const handleChange = (e) => {
-    const { name, value, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: name === "highlighted" ? checked : value,
-    }));
+    const { name, value, checked, type, files } = e.target;
+
+    if (type === "file") {
+      const file = files[0];
+      if (file) {
+        if (file.size > MAX_FILE_SIZE) {
+          setError("La imagen no puede superar los 5MB");
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setFormData((prev) => ({
+            ...prev,
+            image: file,
+            imagePreview: reader.result,
+          }));
+        };
+        reader.readAsDataURL(file);
+        setError(""); // Limpiar error si existe
+      }
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: name === "highlighted" ? checked : value,
+      }));
+    }
   };
 
   const handleImpactChange = (index, value) => {
@@ -65,6 +92,7 @@ function CreateCampaignPage() {
       id: Date.now(),
       raised: 0,
       goal: Number(formData.goal),
+      image: formData.imagePreview || "https://placehold.co/200",
     };
 
     try {
@@ -89,7 +117,7 @@ function CreateCampaignPage() {
   return (
     <>
       <Navbar />
-      <Container maxWidth="md" sx={{ mt: 8, mb: 4 }}>
+      <Container maxWidth="md" sx={{ mt: 10, mb: 4 }}>
         <Paper elevation={3} sx={{ p: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom>
             Crear Nueva Campaña
@@ -156,6 +184,51 @@ function CreateCampaignPage() {
                 sx={{ mb: 2 }}
               />
             ))}
+
+            <Box
+              sx={{
+                mb: 2,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <input
+                accept="image/*"
+                style={{ display: "none" }}
+                id="image-upload"
+                type="file"
+                onChange={handleChange}
+                name="image"
+              />
+              <label htmlFor="image-upload">
+                <Button
+                  variant="outlined"
+                  component="span"
+                  sx={{ mb: 1 }}
+                  startIcon={<CloudUploadIcon />}
+                >
+                  Subir Logo
+                </Button>
+              </label>
+              <Typography variant="caption" color="text.secondary">
+                Tamaño máximo: 5MB
+              </Typography>
+              {formData.imagePreview && (
+                <Box sx={{ mt: 2, position: "relative" }}>
+                  <img
+                    src={formData.imagePreview}
+                    alt="Vista previa"
+                    style={{
+                      width: "120px",
+                      height: "120px",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Box>
+              )}
+            </Box>
 
             <FormControlLabel
               control={

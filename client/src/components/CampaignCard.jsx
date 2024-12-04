@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -6,14 +6,22 @@ import {
   Typography,
   Button,
   Box,
+  CardMedia,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const CampaignCard = ({ campaña }) => {
   const navigate = useNavigate();
+  const [imageUrl, setImageUrl] = useState(
+    campaña?.image || "https://placehold.co/200"
+  );
 
   const handleClick = () => {
     navigate(`/campaigns/${campaña.id}`);
+  };
+
+  const handleImageError = () => {
+    setImageUrl("https://placehold.co/200");
   };
 
   return (
@@ -28,15 +36,21 @@ const CampaignCard = ({ campaña }) => {
         alignItems: "center",
       }}
     >
-      <CardContent>
+      <CardContent sx={{ width: "100%" }}>
         <Typography variant="h6" component="div" gutterBottom>
           {campaña.title}
         </Typography>
-        <img
-          src={campaña.image}
+        <CardMedia
+          component="img"
+          height="140"
+          image={imageUrl}
           alt={campaña.title}
-          width="100%"
-          height="100%"
+          onError={handleImageError}
+          sx={{
+            objectFit: "cover",
+            width: "100%",
+            borderRadius: 1,
+          }}
         />
         <Typography variant="body2" color="text.secondary">
           {campaña.description}
@@ -49,7 +63,7 @@ const CampaignCard = ({ campaña }) => {
           variant="contained"
           onClick={handleClick}
         >
-          Ver detalles
+          Ver más
         </Button>
       </CardActions>
     </Card>

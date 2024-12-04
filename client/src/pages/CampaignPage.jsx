@@ -8,18 +8,6 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 
 function CampaignPage() {
-  const [openModal, setOpenModal] = useState(false);
-  const [selectedCampaign, setSelectedCampaign] = useState(null);
-
-  const handleOpenModal = (campaign) => {
-    setSelectedCampaign(campaign);
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
-
   return (
     <>
       <Navbar />
@@ -84,10 +72,7 @@ function CampaignPage() {
                   justifyContent: "center",
                 }}
               >
-                <CampaignCard
-                  campaña={campaña}
-                  onClickAction={() => handleOpenModal(campaña)}
-                />
+                <CampaignCard campaña={campaña} />
               </Grid>
             ))}
           </Grid>

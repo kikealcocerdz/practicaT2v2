@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import {
   Container,
@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogActions,
   Alert,
+  CardMedia,
 } from "@mui/material";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -22,7 +23,10 @@ import { useDonations } from "../context/DonationContext";
 
 const CampaignDetails = () => {
   const [donationAmount, setDonationAmount] = useState("");
-  const [campaign, setCampaign] = useState(null);
+  const [campaign, setCampaign] = useState(() => {
+    const { id } = useParams();
+    return campaignsData.find((c) => c.id === parseInt(id)) || campaignsData[0];
+  });
   const { id } = useParams();
   const { addDonation } = useDonations();
   const [openModal, setOpenModal] = useState(false);
@@ -30,13 +34,6 @@ const CampaignDetails = () => {
     text: "",
     severity: "success",
   });
-
-  // Cargar los datos de la campaña
-  useEffect(() => {
-    const selectedCampaign =
-      campaignsData.find((c) => c.id === parseInt(id)) || campaignsData[0];
-    setCampaign(selectedCampaign);
-  }, [id]);
 
   const handleDonate = async () => {
     if (!donationAmount || isNaN(donationAmount) || donationAmount <= 0) {
@@ -96,6 +93,10 @@ const CampaignDetails = () => {
     }
   };
 
+  const handleImageError = (e) => {
+    e.target.src = "https://placehold.co/200";
+  };
+
   if (!campaign) return null;
 
   // Calcula el porcentaje de progreso
@@ -129,10 +130,18 @@ const CampaignDetails = () => {
             gap: 2,
           }}
         >
-          <img
+          <CardMedia
+            component="img"
             src={campaign.image}
             alt={`${campaign.title} logo`}
-            style={{ width: "120px", height: "120px", borderRadius: "50%" }}
+            onError={handleImageError}
+            sx={{
+              width: "120px",
+              height: "120px",
+              borderRadius: "50%",
+              objectFit: "cover",
+              margin: "0 auto",
+            }}
           />
           <Typography variant="h4" fontWeight="bold">
             {campaign.title}
