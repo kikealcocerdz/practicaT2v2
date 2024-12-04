@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Container,
@@ -22,12 +22,11 @@ import campaignsData from "../assets/campaigns.json";
 import { useDonations } from "../context/DonationContext";
 
 const CampaignDetails = () => {
-  const [donationAmount, setDonationAmount] = useState("");
-  const [campaign, setCampaign] = useState(() => {
-    const { id } = useParams();
-    return campaignsData.find((c) => c.id === parseInt(id)) || campaignsData[0];
-  });
   const { id } = useParams();
+  const [donationAmount, setDonationAmount] = useState("");
+  const [campaign] = useState(
+    campaignsData.find((c) => c.id === parseInt(id)) || campaignsData[0]
+  );
   const { addDonation } = useDonations();
   const [openModal, setOpenModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({
