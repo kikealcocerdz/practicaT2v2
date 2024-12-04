@@ -24,7 +24,7 @@ import { useDonations } from "../context/DonationContext";
 const CampaignDetails = () => {
   const { id } = useParams();
   const [donationAmount, setDonationAmount] = useState("");
-  const [campaign] = useState(
+  const [campaign, setCampaign] = useState(
     campaignsData.find((c) => c.id === parseInt(id)) || campaignsData[0]
   );
   const { addDonation } = useDonations();
