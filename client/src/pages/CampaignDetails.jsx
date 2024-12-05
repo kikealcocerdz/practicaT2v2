@@ -187,7 +187,7 @@ const CampaignDetails = () => {
 
               {campaign.impact.some((item) => item !== "") && (
                 <>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h5" gutterBottom>
                     ¿Cómo ayuda tu donación?
                   </Typography>
                   <ul>
@@ -218,7 +218,7 @@ const CampaignDetails = () => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h6">Contribuye a esta campaña</Typography>
+          <Typography variant="h5">Contribuye a esta campaña</Typography>
           <Box
             component="form"
             onSubmit={(e) => {
@@ -244,7 +244,7 @@ const CampaignDetails = () => {
             />
 
             {/* Métodos de Pago */}
-            <Typography variant="h6">Selecciona un método de pago:</Typography>
+            <Typography variant="h5">Selecciona un método de pago:</Typography>
             <RadioGroup
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value)}
@@ -321,7 +321,7 @@ const CampaignDetails = () => {
             mb: 4,
           }}
         >
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h5" gutterBottom>
             Progreso de la campaña
           </Typography>
 
