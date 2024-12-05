@@ -46,7 +46,7 @@ app.put("/api/campaigns/:id/donate", async (req, res) => {
       return res.status(404).json({ error: "Campaña no encontrada" });
     }
 
-    campaign.raised += Number(amount);
+    campaign.raised += parseFloat(amount);
 
     await fsPromises.writeFile(
       CAMPAIGNS_FILE,
