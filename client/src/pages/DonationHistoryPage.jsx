@@ -40,7 +40,7 @@ function DonationHistoryPage() {
   return (
     <>
       <Navbar />
-      <Box sx={{ minHeight: "100vh", pt: 10, pb: 4 }}>
+      <Box role="main" sx={{ minHeight: "100vh", pt: 10, pb: 4 }}>
         <Container maxWidth="md">
           <Box
             sx={{
