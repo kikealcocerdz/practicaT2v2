@@ -73,6 +73,7 @@ function Navbar() {
   return (
     <>
       <AppBar
+        component={"header"}
         position="fixed"
         sx={{ backgroundColor: "primary.main", boxShadow: 3 }}
       >

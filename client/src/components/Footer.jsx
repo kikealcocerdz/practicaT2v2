@@ -15,6 +15,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 const Footer = () => {
   return (
     <AppBar
+      component={"footer"}
       position="static"
       sx={{
         top: "auto",
@@ -22,6 +23,7 @@ const Footer = () => {
         backgroundColor: "#333",
         padding: "1rem 0",
       }}
+      role="contentinfo"
     >
       <Toolbar
         sx={{ flexDirection: "column", alignItems: "center", gap: "1rem" }}
@@ -31,6 +33,7 @@ const Footer = () => {
             color="inherit"
             href="https://www.facebook.com"
             target="_blank"
+            aria-label="Visit our Facebook page"
           >
             <FacebookIcon />
           </IconButton>
@@ -38,6 +41,7 @@ const Footer = () => {
             color="inherit"
             href="https://www.twitter.com"
             target="_blank"
+            aria-label="Visit our Twitter page"
           >
             <TwitterIcon />
           </IconButton>
@@ -45,6 +49,7 @@ const Footer = () => {
             color="inherit"
             href="https://www.instagram.com"
             target="_blank"
+            aria-label="Visit our Instagram page"
           >
             <InstagramIcon />
           </IconButton>

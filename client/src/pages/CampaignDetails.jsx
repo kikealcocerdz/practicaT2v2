@@ -128,6 +128,7 @@ const CampaignDetails = () => {
     <>
       <Navbar />
       <Container
+        role="main"
         maxWidth="md"
         sx={{
           paddingTop: 10,

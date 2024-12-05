@@ -27,133 +27,137 @@ function HomePage() {
   return (
     <>
       <Navbar />
-      {/* Hero Section */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexWrap: "wrap",
-          marginTop: 8,
-          padding: 2,
-        }}
-      >
+      <main>
+        {/* Hero Section */}
         <Box
           sx={{
             display: "flex",
-            flexDirection: {
-              xs: "column",
-              md: "row",
-            },
+            justifyContent: "center",
             alignItems: "center",
-            justifyContent: "space-around",
-            backgroundImage: `url(${heroBackgroundImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            width: "100%",
-            maxWidth: "1200px",
-            height: "auto",
-            padding: 3,
-            borderRadius: 2,
-            gap: 3,
-            color: "black",
+            flexWrap: "wrap",
+            marginTop: 8,
+            padding: 2,
           }}
         >
           <Box
             sx={{
-              backgroundColor: "rgba(255,255,255,0.9)",
-              borderRadius: 2,
+              display: "flex",
+              flexDirection: {
+                xs: "column",
+                md: "row",
+              },
+              alignItems: "center",
+              justifyContent: "space-around",
+              backgroundImage: `url(${heroBackgroundImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              width: "100%",
+              maxWidth: "1200px",
+              height: "auto",
               padding: 3,
-              maxWidth: "400px",
-              textAlign: "center",
+              borderRadius: 2,
+              gap: 3,
+              color: "black",
             }}
           >
-            <Typography
-              variant="h3"
+            <Box
               sx={{
-                fontWeight: "bold",
-                fontFamily: "Playfair Display, serif",
-                fontSize: { xs: "2.5rem", md: "3rem" },
+                backgroundColor: "rgba(255,255,255,0.9)",
+                borderRadius: 2,
+                padding: 3,
+                maxWidth: "400px",
+                textAlign: "center",
               }}
             >
-              DonarAUnClick
-            </Typography>
-            <Typography variant="subtitle1" sx={{ marginTop: 2 }}>
-              Donde las donaciones llegan a su destino
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              backgroundColor: "rgba(255,255,255,0.9)",
-              borderRadius: 2,
-              padding: 3,
-              maxWidth: "600px",
-            }}
-          >
-            <Typography variant="h4" gutterBottom>
-              ¿Qué es DonarAUnClick?
-            </Typography>
-            <Typography variant="body1" sx={{ textAlign: "justify" }}>
-              <strong>DonarAUnClick</strong> es una plataforma que conecta
-              personas con ONGs y servicios locales. Con un enfoque en la{" "}
-              <strong>transparencia</strong> y la{" "}
-              <strong>responsabilidad</strong>, trabajamos para hacer visibles
-              los beneficios que aportan las donaciones.
-            </Typography>
-            <Button
-              size="large"
-              color="primary"
-              variant="contained"
-              component={Link}
-              to="/campaigns"
+              <Typography
+                variant="h1"
+                sx={{
+                  fontWeight: "bold",
+                  fontFamily: "Playfair Display, serif",
+                  fontSize: { xs: "2.5rem", md: "3rem" },
+                }}
+              >
+                DonarAUnClick
+              </Typography>
+              <Typography
+                variant="h2"
+                sx={{ marginTop: 2, fontSize: "1.5rem" }}
+              >
+                Donde las donaciones llegan a su destino
+              </Typography>
+            </Box>
+            <Box
               sx={{
-                color: "primary.contrastText",
-                margin: 1,
-                "&:hover": {
-                  backgroundColor: "primary.dark",
+                backgroundColor: "rgba(255,255,255,0.9)",
+                borderRadius: 2,
+                padding: 3,
+                maxWidth: "600px",
+              }}
+            >
+              <Typography variant="h3" gutterBottom>
+                ¿Qué es DonarAUnClick?
+              </Typography>
+              <Typography variant="body1" sx={{ textAlign: "justify" }}>
+                <strong>DonarAUnClick</strong> es una plataforma que conecta
+                personas con ONGs y servicios locales. Con un enfoque en la{" "}
+                <strong>transparencia</strong> y la{" "}
+                <strong>responsabilidad</strong>, trabajamos para hacer visibles
+                los beneficios que aportan las donaciones.
+              </Typography>
+              <Button
+                size="large"
+                color="primary"
+                variant="contained"
+                component={Link}
+                to="/campaigns"
+                sx={{
                   color: "primary.contrastText",
-                },
-              }}
-            >
-              Haz tu primera donación
-            </Button>
+                  margin: 1,
+                  "&:hover": {
+                    backgroundColor: "primary.dark",
+                    color: "primary.contrastText",
+                  },
+                }}
+              >
+                Haz tu primera donación
+              </Button>
+            </Box>
           </Box>
         </Box>
-      </Box>
 
-      {/* Featured Campaigns */}
-      <Box
-        sx={{
-          backgroundColor: "white",
-          padding: 3,
-        }}
-      >
-        <Container maxWidth="lg">
-          <Typography variant="h4" gutterBottom sx={{ textAlign: "center" }}>
-            Campañas destacadas
-          </Typography>
-          <Grid
-            container
-            spacing={3}
-            pt={6}
-            pb={6}
-            sx={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: 3,
-            }}
-          >
-            {campañasDestacadas.map((campaña, index) => (
-              <CampaignCard
-                key={index}
-                campaña={campaña}
-                onClickAction={() => handleOpenModal(campaña)}
-              />
-            ))}
-          </Grid>
-        </Container>
-      </Box>
-
+        {/* Featured Campaigns */}
+        <Box
+          sx={{
+            backgroundColor: "white",
+            padding: 3,
+          }}
+        >
+          <Container maxWidth="lg">
+            <Typography variant="h4" gutterBottom sx={{ textAlign: "center" }}>
+              Campañas destacadas
+            </Typography>
+            <Grid
+              container
+              spacing={3}
+              pt={6}
+              pb={6}
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                gap: 3,
+              }}
+            >
+              {campañasDestacadas.map((campaña, index) => (
+                <CampaignCard
+                  key={index}
+                  campaña={campaña}
+                  onClickAction={() => handleOpenModal(campaña)}
+                />
+              ))}
+            </Grid>
+          </Container>
+        </Box>
+      </main>
       <Footer />
     </>
   );

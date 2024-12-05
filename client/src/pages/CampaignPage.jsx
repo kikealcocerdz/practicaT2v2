@@ -12,6 +12,7 @@ function CampaignPage() {
     <>
       <Navbar />
       <Box
+        role="main"
         sx={{
           minHeight: "100vh",
           backgroundColor: "white",

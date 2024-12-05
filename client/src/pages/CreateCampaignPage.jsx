@@ -117,7 +117,7 @@ function CreateCampaignPage() {
   return (
     <>
       <Navbar />
-      <Container maxWidth="md" sx={{ mt: 10, mb: 4 }}>
+      <Container maxWidth="md" sx={{ mt: 10, mb: 4 }} role="main">
         <Paper elevation={3} sx={{ p: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom>
             Crear Nueva Campaña
