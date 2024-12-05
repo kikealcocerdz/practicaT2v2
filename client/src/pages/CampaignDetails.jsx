@@ -65,9 +65,29 @@ const CampaignDetails = () => {
         console.log("Procesando pago con Google Pay...");
       }
 
-      // Simular una petición al servidor
-      const updatedRaised = campaign.raised + parseFloat(donationAmount);
-      setCampaign((prev) => ({ ...prev, raised: updatedRaised }));
+      // Petición al servidor
+      const response = await fetch(
+        `http://localhost:3001/api/campaigns/${campaign.id}/donate`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ amount: Number(donationAmount) }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al procesar la donación");
+      }
+
+      const updatedCampaign = await response.json();
+
+      // Actualizar el estado local de la campaña
+      setCampaign((prevCampaign) => ({
+        ...prevCampaign,
+        raised: updatedCampaign.raised,
+      }));
 
       addDonation({
         campaignId: campaign.id,
