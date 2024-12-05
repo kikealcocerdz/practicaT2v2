@@ -45,7 +45,7 @@ function CampaignPage() {
               flexDirection: { xs: "column", md: "row" },
             }}
           >
-            <Typography variant="h4" component="h2">
+            <Typography variant="h4" component="h1">
               Todas las Campañas
             </Typography>
             <Button

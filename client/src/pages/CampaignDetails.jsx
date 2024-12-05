@@ -176,7 +176,7 @@ const CampaignDetails = () => {
             <CardContent>
               {campaign.fullDescription && (
                 <>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h4" gutterBottom>
                     Descripción
                   </Typography>
                   <Typography variant="body1" paragraph>
