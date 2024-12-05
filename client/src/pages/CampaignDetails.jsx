@@ -73,7 +73,7 @@ const CampaignDetails = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ amount: Number(donationAmount) }),
+          body: JSON.stringify({ amount: parseFloat(donationAmount) }),
         }
       );
 
