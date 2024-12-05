@@ -15,11 +15,15 @@ import {
   DialogActions,
   Alert,
   CardMedia,
+  RadioGroup,
+  Radio,
+  FormControlLabel,
 } from "@mui/material";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import campaignsData from "../assets/campaigns.json";
 import { useDonations } from "../context/DonationContext";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
 const CampaignDetails = () => {
   const { id } = useParams();
@@ -29,6 +33,8 @@ const CampaignDetails = () => {
   );
   const { addDonation } = useDonations();
   const [openModal, setOpenModal] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("card");
+
   const [modalMessage, setModalMessage] = useState({
     text: "",
     severity: "success",
@@ -45,37 +51,31 @@ const CampaignDetails = () => {
     }
 
     try {
-      const response = await fetch(
-        `http://localhost:3001/api/campaigns/${campaign.id}/donate`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ amount: Number(donationAmount) }),
+      // Simulación de procesamiento de pago según método
+      if (paymentMethod === "card") {
+        if (!stripe || !elements) {
+          throw new Error("Error de integración con Stripe.");
         }
-      );
-
-      if (!response.ok) {
-        throw new Error("Error al procesar la donación");
+        const cardElement = elements.getElement(CardElement);
+        const mockToken = { id: `tok_mock_${Date.now()}` };
+        console.log("Tarjeta procesada, token:", mockToken);
+      } else if (paymentMethod === "paypal") {
+        console.log("Procesando pago con PayPal...");
+      } else if (paymentMethod === "googlepay") {
+        console.log("Procesando pago con Google Pay...");
       }
 
-      const updatedCampaign = await response.json();
+      // Simular una petición al servidor
+      const updatedRaised = campaign.raised + parseFloat(donationAmount);
+      setCampaign((prev) => ({ ...prev, raised: updatedRaised }));
 
-      // Actualizar el estado local de la campaña
-      setCampaign((prevCampaign) => ({
-        ...prevCampaign,
-        raised: updatedCampaign.raised,
-      }));
-
-      const donationData = {
+      addDonation({
         campaignId: campaign.id,
         campaignTitle: campaign.title,
-        amount: Number(donationAmount),
+        amount: parseFloat(donationAmount),
         image: campaign.image,
-      };
+      });
 
-      addDonation(donationData);
       setModalMessage({
         text: `¡Gracias por donar ${donationAmount}€ a ${campaign.title}!`,
         severity: "success",
@@ -83,7 +83,7 @@ const CampaignDetails = () => {
       setOpenModal(true);
       setDonationAmount("");
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error al procesar la donación:", error);
       setModalMessage({
         text: "Hubo un error al procesar tu donación. Por favor, inténtalo de nuevo.",
         severity: "error",
@@ -186,6 +186,7 @@ const CampaignDetails = () => {
         )}
 
         {/* Formulario de donación */}
+        {/* Formulario de Donación */}
         <Box
           sx={{
             width: "100%",
@@ -198,21 +199,17 @@ const CampaignDetails = () => {
         >
           <Typography variant="h6">Contribuye a esta campaña</Typography>
           <Box
+            component="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleDonate();
+            }}
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
               width: "100%",
+              display: "flex",
+              flexDirection: "column",
               gap: 2,
-              // Estilos responsivos
-              flexDirection: {
-                xs: "column",
-                sm: "row",
-              },
-              gap: {
-                xs: 1,
-                sm: 2, // Mayor separación en pantallas medianas o mayores
-              },
+              alignItems: "center",
             }}
           >
             <TextField
@@ -221,15 +218,68 @@ const CampaignDetails = () => {
               variant="outlined"
               value={donationAmount}
               onChange={(e) => setDonationAmount(e.target.value)}
-              sx={{ width: "70%" }}
+              fullWidth
+              required
             />
+
+            {/* Métodos de Pago */}
+            <Typography variant="h6">Selecciona un método de pago:</Typography>
+            <RadioGroup
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              row
+              sx={{ justifyContent: "center", gap: 2 }}
+            >
+              <FormControlLabel
+                value="card"
+                control={<Radio />}
+                label="Tarjeta"
+              />
+              <FormControlLabel
+                value="paypal"
+                control={<Radio />}
+                label="PayPal"
+              />
+              <FormControlLabel
+                value="googlepay"
+                control={<Radio />}
+                label="Google Pay"
+              />
+            </RadioGroup>
+
+            {/* Mostrar campos según método de pago */}
+            {paymentMethod === "card" && (
+              <Box
+                sx={{
+                  width: "100%",
+                  maxWidth: "400px",
+                  padding: 2,
+                  border: "1px solid #ccc",
+                  borderRadius: "8px",
+                }}
+              >
+                <CardElement />
+              </Box>
+            )}
+
+            {paymentMethod === "paypal" && (
+              <Typography variant="body2" color="text.secondary">
+                Serás redirigido a PayPal para completar el pago.
+              </Typography>
+            )}
+
+            {paymentMethod === "googlepay" && (
+              <Typography variant="body2" color="text.secondary">
+                Usa Google Pay para completar el pago.
+              </Typography>
+            )}
+
             <Button
+              type="submit"
               variant="contained"
-              color="secondary"
-              onClick={handleDonate}
+              color="primary"
               sx={{
-                padding: "10px 40px",
-                fontSize: "16px",
+                padding: "10px 20px",
                 fontWeight: "bold",
               }}
             >

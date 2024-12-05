@@ -2,35 +2,24 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import heroBackgroundImage from "../assets/hero-background-image.jpg";
-import {
-  Container,
-  Typography,
-  Button,
-  Grid,
-  Box,
-  Card,
-  CardContent,
-  CardActions,
-} from "@mui/material";
+import { Container, Typography, Button, Grid, Box } from "@mui/material";
 import Footer from "../components/Footer";
 import CampaignCard from "../components/CampaignCard";
 import campaignsData from "../assets/campaigns.json";
 
 function HomePage() {
-  const [openModal, setOpenModal] = useState(false); // Estado para el modal
-  const [selectedCampaign, setSelectedCampaign] = useState(null); // Campaña seleccionada
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedCampaign, setSelectedCampaign] = useState(null);
 
-  // Conseguir campañas destacadas
-  const campañas = campaignsData;
-  const campañasDestacadas = campañas.filter((campaña) => campaña.highlighted);
+  const campañasDestacadas = campaignsData.filter(
+    (campaña) => campaña.highlighted
+  );
 
-  // Manejar apertura del modal
   const handleOpenModal = (campaign) => {
     setSelectedCampaign(campaign);
     setOpenModal(true);
   };
 
-  // Manejar cierre del modal
   const handleCloseModal = () => {
     setOpenModal(false);
   };
@@ -38,103 +27,78 @@ function HomePage() {
   return (
     <>
       <Navbar />
+      {/* Hero Section */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
-          width: "100%",
           alignItems: "center",
+          flexWrap: "wrap",
           marginTop: 8,
+          padding: 2,
         }}
       >
         <Box
-          marginTop={4}
           sx={{
-            textAlign: "center",
-            height: "60vh",
-            width: "75vw",
-            borderRadius: "15px",
-            justifyContent: "center",
-            gap: 8,
             display: "flex",
+            flexDirection: {
+              xs: "column",
+              md: "row",
+            },
             alignItems: "center",
+            justifyContent: "space-around",
             backgroundImage: `url(${heroBackgroundImage})`,
-            backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
-            color: "white",
-            fontFamily: "Roboto, sans-serif",
+            backgroundPosition: "center",
+            width: "100%",
+            maxWidth: "1200px",
+            height: "auto",
+            padding: 3,
+            borderRadius: 2,
+            gap: 3,
+            color: "black",
           }}
         >
           <Box
             sx={{
-              backgroundColor: "white",
-              color: "black",
-              borderRadius: "15px",
+              backgroundColor: "rgba(255,255,255,0.9)",
+              borderRadius: 2,
+              padding: 3,
+              maxWidth: "400px",
+              textAlign: "center",
             }}
           >
             <Typography
-              variant="h2"
-              component="h1"
-              align="center"
+              variant="h3"
               sx={{
                 fontWeight: "bold",
-                borderRadius: "15px",
-                padding: "15px",
                 fontFamily: "Playfair Display, serif",
+                fontSize: { xs: "2.5rem", md: "3rem" },
               }}
             >
               DonarAUnClick
             </Typography>
-            <Typography
-              variant="h7"
-              component="h3"
-              align="center"
-              gutterBottom
-              sx={{
-                marginTop: 1,
-                padding: "10px",
-              }}
-            >
+            <Typography variant="subtitle1" sx={{ marginTop: 2 }}>
               Donde las donaciones llegan a su destino
             </Typography>
           </Box>
           <Box
             sx={{
-              backgroundColor: "white",
-              color: "black",
-              borderRadius: "15px",
-              justifyContent: "center",
-              padding: "50px",
-              alignItems: "center",
-              display: "flex",
-              flexDirection: "column",
-              width: "50%",
+              backgroundColor: "rgba(255,255,255,0.9)",
+              borderRadius: 2,
+              padding: 3,
+              maxWidth: "600px",
             }}
           >
-            <Typography
-              variant="h4"
-              component="h2"
-              width={"80%"}
-              textAlign={"left"}
-              fontWeight={"regular"}
-              gutterBottom
-            >
+            <Typography variant="h4" gutterBottom>
               ¿Qué es DonarAUnClick?
             </Typography>
-            <Typography
-              variant="body1"
-              component="p"
-              align="justify"
-              gutterBottom
-              sx={{ maxWidth: "80%" }}
-            >
-              <strong>DonarAUnClick</strong> es una plataforma que busca dar a
-              las personas la oportunidad de donar a sus comunidades y a los
-              servicios locales. Con un enfoque en la{" "}
-              <strong>transparencia y la responsabilidad</strong>, nos permite
-              hacer visibles los beneficios que aportan las donaciones. Nuestro
-              trabajo es conectar a las distintas ONGs con las personas que
-              desean ayudar.
+            <Typography variant="body1" sx={{ textAlign: "justify" }}>
+              <strong>DonarAUnClick</strong> es una plataforma que conecta
+              personas con ONGs y servicios locales. Con un enfoque en la{" "}
+              <strong>transparencia</strong> y la{" "}
+              <strong>responsabilidad</strong>, trabajamos para hacer visibles
+              los beneficios que aportan las donaciones.
             </Typography>
             <Button
               size="large"
@@ -143,9 +107,12 @@ function HomePage() {
               component={Link}
               to="/campaigns"
               sx={{
-                marginTop: 2,
-                width: "80%",
-                padding: "10px",
+                color: "primary.contrastText",
+                margin: 1,
+                "&:hover": {
+                  backgroundColor: "primary.dark",
+                  color: "primary.contrastText",
+                },
               }}
             >
               Haz tu primera donación
@@ -153,60 +120,35 @@ function HomePage() {
           </Box>
         </Box>
       </Box>
+
+      {/* Featured Campaigns */}
       <Box
         sx={{
-          minHeight: "100vh",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
           backgroundColor: "white",
-          display: "flex",
-          alignItems: "start",
-          justifyContent: "start",
-          textAlign: "center",
-          paddingTop: 8,
+          padding: 3,
         }}
       >
-        <Container
-          maxWidth="lg"
-          id="campaigns"
-          sx={{
-            bgcolor: "rgba(255, 255, 255, 0.8)",
-            p: 4,
-            borderRadius: 2,
-            boxShadow: 3,
-            backgroundColor: "aliceblue",
-            mb: 4,
-          }}
-        >
-          <Typography variant="h4" component="h2" gutterBottom>
+        <Container maxWidth="lg">
+          <Typography variant="h4" gutterBottom sx={{ textAlign: "center" }}>
             Campañas destacadas
           </Typography>
           <Grid
             container
-            spacing={4}
+            spacing={3}
+            pt={6}
+            pb={6}
             sx={{
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: 3,
             }}
           >
             {campañasDestacadas.map((campaña, index) => (
-              <Grid
-                item
+              <CampaignCard
                 key={index}
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <CampaignCard
-                  campaña={campaña}
-                  onClickAction={() => handleOpenModal(campaña)}
-                />
-              </Grid>
+                campaña={campaña}
+                onClickAction={() => handleOpenModal(campaña)}
+              />
             ))}
           </Grid>
         </Container>

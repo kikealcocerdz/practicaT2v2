@@ -28,6 +28,10 @@ function CampaignPage() {
             boxShadow: 3,
             backgroundColor: "aliceblue",
             mb: 4,
+            display: { xs: "flex", md: "block" },
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <Box
@@ -36,6 +40,8 @@ function CampaignPage() {
               justifyContent: "space-between",
               alignItems: "center",
               mb: 3,
+              gap: 2,
+              flexDirection: { xs: "column", md: "row" },
             }}
           >
             <Typography variant="h4" component="h2">
@@ -47,6 +53,14 @@ function CampaignPage() {
               startIcon={<AddIcon />}
               component={Link}
               to="/campaigns/create"
+              sx={{
+                color: "primary.contrastText",
+                marginX: 1,
+                "&:hover": {
+                  backgroundColor: "primary.dark",
+                  color: "primary.contrastText",
+                },
+              }}
             >
               Crear Nueva Campaña
             </Button>
@@ -58,8 +72,14 @@ function CampaignPage() {
               justifyContent: "center",
               alignItems: "center",
               width: "100%",
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              height: "100%",
+              display: {
+                xs: "flex",
+                sm: "grid",
+              },
+              gridTemplateColumns: {
+                sm: "repeat(auto-fit, minmax(300px, 1fr))",
+              },
             }}
           >
             {campaignsData.map((campaña, index) => (
@@ -70,6 +90,8 @@ function CampaignPage() {
                   width: "100%",
                   display: "flex",
                   justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
                 }}
               >
                 <CampaignCard campaña={campaña} />
